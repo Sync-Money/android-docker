@@ -7,8 +7,8 @@ FROM alpine:latest
 
 COPY . /src
 
-RUN apk add build-base git bash patch wget texinfo
-# RUN cd /src && ./toolchain.sh
+RUN apk add build-base git bash wget openjdk8-jre android-tools
+RUN java --version
 
 # Second stage of Dockerfile
 FROM alpine:latest  
