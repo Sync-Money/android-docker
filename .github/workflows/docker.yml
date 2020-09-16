@@ -28,3 +28,4 @@ jobs:
       with:
         push: true
         tags: syncmoney/android:latest
+        build-args: SDK_TOOLS=6609375, BUILD_TOOLS=29.0.2, ANDROID_API=29
