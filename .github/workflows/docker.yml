@@ -27,11 +27,11 @@ jobs:
     - uses: docker/build-push-action@v2
       with:
         push: true
-        tags: syncmoney/android:latest
-        build-args: SDK_TOOLS=6609375, BUILD_TOOLS=29.0.2, ANDROID_API=29
+        tags: syncmoney/android-slim:latest
+        build-args: SLIM=1, SDK_TOOLS=6609375, BUILD_TOOLS=29.0.2, ANDROID_API=29
 
     - uses: docker/build-push-action@v2
       with:
         push: true
-        tags: syncmoney/android-slim:latest
-        build-args: SLIM=1, SDK_TOOLS=6609375, BUILD_TOOLS=29.0.2, ANDROID_API=29
+        tags: syncmoney/android:latest
+        build-args: SDK_TOOLS=6609375, BUILD_TOOLS=29.0.2, ANDROID_API=29
