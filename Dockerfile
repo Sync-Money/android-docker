@@ -20,8 +20,9 @@ RUN wget -q https://dl.google.com/android/repository/commandlinetools-linux-${SD
 
 # Install SDK Packages
 RUN mkdir -p ~/.android/ && touch ~/.android/repositories.cfg && \
-    yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses && \
-    sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "patcher;v4" "emulator" "tools" "build-tools;${BUILD_TOOLS}" "platforms;android-${ANDROID_API}"
+    yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
+
+RUN [ -z "$SLIM" ] && sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "patcher;v4" "emulator" "tools" "build-tools;${BUILD_TOOLS}" "platforms;android-${ANDROID_API}"
 
 # Install Firebase CLI
 RUN curl -Lo ./firebase_bin https://firebase.tools/bin/linux/latest
