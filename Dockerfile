@@ -11,8 +11,6 @@ ENV PATH $PATH:${ANDROID_HOME}/cmdline-tools/tools/bin:${ANDROID_HOME}/platform-
 # Install required dependencies
 RUN apk add bash unzip wget curl openjdk8
 
-RUN echo $SDK_TOOLS
-
 # Download and extract Android Tools
 RUN wget -q https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS}_latest.zip -O /tmp/tools.zip && \
     mkdir -p ${ANDROID_HOME}/cmdline-tools && \
@@ -23,7 +21,10 @@ RUN wget -q https://dl.google.com/android/repository/commandlinetools-linux-${SD
 RUN mkdir -p ~/.android/ && touch ~/.android/repositories.cfg && \
     yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
 
-RUN [ -z "$SLIM" ] && sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "patcher;v4" "emulator" "tools" "build-tools;${BUILD_TOOLS}" "platforms;android-${ANDROID_API}"
+RUN if [ "$SLIM" == "1" ]; \
+    then echo "SKIPPING DOWNLOAD OF ADDITIONAL SDKMANAGER TOOLS"; \
+    else sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "patcher;v4" "emulator" "tools" "build-tools;${BUILD_TOOLS}" "platforms;android-${ANDROID_API}"; \
+    fi 
 
 # Install Firebase CLI
 RUN curl -Lo ./firebase_bin https://firebase.tools/bin/linux/latest
